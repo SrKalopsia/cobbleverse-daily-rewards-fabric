@@ -1,4 +1,4 @@
-# Cobbleverse Daily Rewards
+# Cobbleverse Daily Rewards Fabric
 
 A fully functional, bilingual, and heavily optimized fork of the original Daily Rewards mod, tailored for modern Fabric servers.
 
