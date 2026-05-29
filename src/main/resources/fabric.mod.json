@@ -2,12 +2,13 @@
 	"schemaVersion": 1,
 	"id": "rewards",
 	"version": "${version}",
-	"name": "Rewards",
-	"description": "reward things to people",
+	"name": "Cobbleverse Daily Rewards",
+	"description": "A bilingual, highly configurable daily rewards and playtime tracking mod.",
 	"authors": [
+		"SrKalopsia",
 		"AlpestrineC!"
 	],
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/icon.png",
 	"environment": "*",
 	"entrypoints": {
