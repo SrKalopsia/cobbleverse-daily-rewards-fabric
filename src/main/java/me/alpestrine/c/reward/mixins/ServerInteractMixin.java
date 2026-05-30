@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import eu.pb4.polymer.core.api.utils.PolymerUtils;
+
 @Mixin(Entity.class)
 public class ServerInteractMixin {
 
@@ -20,7 +22,7 @@ public class ServerInteractMixin {
     private void hookInteract(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         Entity entity = (Entity) (Object) this;
         if (player instanceof ServerPlayerEntity spe && !(spe.currentScreenHandler instanceof CustomScreenHandler) && MainServer.screenEntities.contains(entity.getUuid())) {
-            spe.openHandledScreen(new SelectionScreen());
+            PolymerUtils.executeWithPlayerContext(spe, () -> spe.openHandledScreen(new SelectionScreen()));
             spe.swingHand(hand, true);
         }
     }

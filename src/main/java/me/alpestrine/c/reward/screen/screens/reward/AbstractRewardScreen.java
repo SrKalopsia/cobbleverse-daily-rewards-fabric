@@ -1,5 +1,6 @@
 package me.alpestrine.c.reward.screen.screens.reward;
 
+import me.alpestrine.c.reward.MainMod;
 import me.alpestrine.c.reward.config.PlayerDataHandler;
 import me.alpestrine.c.reward.config.objects.JsonBaseReward;
 import me.alpestrine.c.reward.config.objects.JsonPlayerData;
@@ -71,21 +72,21 @@ public abstract class AbstractRewardScreen extends AbstractACScreen {
     protected void fillEmpty() {
         super.fillEmpty();
 
-        setButton(18, ItemBuilder.start(backItem).name(Text.translatable("gui.rewards.back_button"))
+        setButton(18, ItemBuilder.start(backItem).name(MainMod.t(Text.translatable("gui.rewards.back_button")))
                 .button(event -> event.player.openHandledScreen(new SelectionScreen())));
 
         int prev = getPage() - 1;
         boolean canPrev = canSetPageTo(prev);
         setButton(25,
                 ItemBuilder.start(canPrev ? prevItem : invalidItem)
-                        .name(canPrev ? Text.translatable("gui.rewards.prev_page", prev) : Text.empty())
+                        .name(canPrev ? MainMod.t(Text.translatable("gui.rewards.prev_page", prev)) : Text.empty())
                         .button(canPrev ? event -> setPageForPlayer(prev, event.player) : null));
 
         int next = getPage() + 1;
         boolean canNext = canSetPageTo(next);
         setButton(26,
                 ItemBuilder.start(canNext ? nextItem : invalidItem)
-                        .name(canNext ? Text.translatable("gui.rewards.next_page", next) : Text.empty())
+                        .name(canNext ? MainMod.t(Text.translatable("gui.rewards.next_page", next)) : Text.empty())
                         .button(canNext ? event -> setPageForPlayer(next, event.player) : null));
     }
 
@@ -129,8 +130,8 @@ public abstract class AbstractRewardScreen extends AbstractACScreen {
                     empty++;
                 }
                 if (empty < stacks.size()) {
-                    player.sendMessage(Text.translatable("gui.rewards.inventory_full", stacks.size(), empty)
-                            .formatted(Formatting.RED));
+                    player.sendMessage(MainMod.t(Text.translatable("gui.rewards.inventory_full", stacks.size(), empty)
+                            .formatted(Formatting.RED), player));
                     return;
                 }
                 for (ItemStack is : stacks) {

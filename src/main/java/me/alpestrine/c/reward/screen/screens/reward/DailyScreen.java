@@ -1,5 +1,6 @@
 package me.alpestrine.c.reward.screen.screens.reward;
 
+import me.alpestrine.c.reward.MainMod;
 import me.alpestrine.c.reward.config.DailyConfigHandler;
 import me.alpestrine.c.reward.config.objects.JsonDailyReward;
 import me.alpestrine.c.reward.config.objects.JsonPlayerData;
@@ -9,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -22,9 +24,9 @@ public class DailyScreen extends AbstractRewardScreen {
         int currentStreak = data.currentStreak;
 
         setButton(4, ItemBuilder.start(dailyItem)
-                .name(Text.translatable(
+                .name(MainMod.t(Text.translatable(
                         currentStreak == 1 ? "gui.rewards.daily.streak.singular" : "gui.rewards.daily.streak.plural",
-                        currentStreak))
+                        currentStreak), viewer))
                 .button());
 
         int currentSlot = minSlot - 1;
@@ -46,7 +48,7 @@ public class DailyScreen extends AbstractRewardScreen {
                 sl = (currentSlot += 1);
             }
             setButton(currentPage, sl, ItemBuilder.start(getClaimItem(isClaimed, isClaimable))
-                    .name(Text.translatable("gui.rewards.daily.day", reqTrek))
+                    .name(MainMod.t(Text.translatable("gui.rewards.daily.day", reqTrek), viewer))
                     .tooltip(getToolTip(jpr.getRewardItems()))
                     .button(event -> onClick(isClaimed, isClaimable, event.player, data, jpr, Type.Daily)));
         }
@@ -54,7 +56,7 @@ public class DailyScreen extends AbstractRewardScreen {
 
     @Override
     public Text getName() {
-        return Text.translatable("gui.rewards.daily.title");
+        return MainMod.t(Text.translatable("gui.rewards.daily.title"));
     }
 
     @Override

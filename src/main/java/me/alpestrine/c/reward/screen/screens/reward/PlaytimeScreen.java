@@ -1,5 +1,6 @@
 package me.alpestrine.c.reward.screen.screens.reward;
 
+import me.alpestrine.c.reward.MainMod;
 import me.alpestrine.c.reward.config.PlaytimeConfigHandler;
 import me.alpestrine.c.reward.config.objects.JsonPlayerData;
 import me.alpestrine.c.reward.config.objects.JsonPlaytimeReward;
@@ -10,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -23,8 +25,8 @@ public class PlaytimeScreen extends AbstractRewardScreen {
         int currentPlaytime = data.playtimeSeconds;
 
         setButton(4, ItemBuilder.start(playtimeItem)
-                .name(Text.translatable("gui.rewards.playtime.played",
-                        TimeFormatter.format(IMath.round(currentPlaytime / 60, 3))))
+                .name(MainMod.t(Text.translatable("gui.rewards.playtime.played",
+                        TimeFormatter.format(IMath.round(currentPlaytime / 60, 3))), viewer))
                 .button());
 
         int currentSlot = minSlot - 1;
@@ -46,8 +48,8 @@ public class PlaytimeScreen extends AbstractRewardScreen {
                 sl = (currentSlot += 1);
             }
             setButton(currentPage, sl, ItemBuilder.start(getClaimItem(isClaimed, isClaimable))
-                    .name(Text.translatable("gui.rewards.playtime.required",
-                            TimeFormatter.format(IMath.round(seconds / 60, 3))))
+                    .name(MainMod.t(Text.translatable("gui.rewards.playtime.required",
+                            TimeFormatter.format(IMath.round(seconds / 60, 3))), viewer))
                     .tooltip(getToolTip(jpr.getRewardItems()))
                     .button(event -> onClick(isClaimed, isClaimable, event.player, data, jpr, Type.Playtime)));
         }
@@ -60,6 +62,6 @@ public class PlaytimeScreen extends AbstractRewardScreen {
 
     @Override
     public Text getName() {
-        return Text.translatable("gui.rewards.playtime.title");
+        return MainMod.t(Text.translatable("gui.rewards.playtime.title"));
     }
 }

@@ -1,5 +1,6 @@
 package me.alpestrine.c.reward.screen.screens;
 
+import me.alpestrine.c.reward.MainMod;
 import me.alpestrine.c.reward.screen.button.ItemBuilder;
 import me.alpestrine.c.reward.screen.screens.reward.DailyScreen;
 import me.alpestrine.c.reward.screen.screens.reward.PlaytimeScreen;
@@ -10,16 +11,16 @@ public class SelectionScreen extends AbstractACScreen {
     @Override
     public void addButtons(ServerPlayerEntity viewer) {
         setButton(11, ItemBuilder.start(DailyScreen.dailyItem)
-                .name(Text.translatable("gui.rewards.selection.daily"))
+                .name(MainMod.t(Text.translatable("gui.rewards.selection.daily"), viewer))
                 .button(event -> event.player.openHandledScreen(new DailyScreen())));
         setButton(15, ItemBuilder.start(PlaytimeScreen.playtimeItem)
-                .name(Text.translatable("gui.rewards.selection.playtime"))
+                .name(MainMod.t(Text.translatable("gui.rewards.selection.playtime"), viewer))
                 .button(event -> event.player.openHandledScreen(new PlaytimeScreen())));
     }
 
     @Override
     public Text getName() {
-        return Text.translatable("gui.rewards.selection.title");
+        return MainMod.t(Text.translatable("gui.rewards.selection.title"));
     }
 
     @Override

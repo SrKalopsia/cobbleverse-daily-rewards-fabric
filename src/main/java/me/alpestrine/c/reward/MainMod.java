@@ -20,6 +20,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.nucleoid.server.translations.api.Localization;
+import eu.pb4.polymer.core.api.utils.PolymerUtils;
 
 import java.util.UUID;
 
@@ -60,8 +62,8 @@ public class MainMod implements ModInitializer {
 							MainServer.configHandlerThread.execute(AbstractRewardScreen.dataHandler::writeCurrentValue);
 							MainMod.refreshIfRewardScreen(target);
 
-							context.getSource().sendMessage(
-									Text.translatable("commands.rewards.reset.success", target.getName().getString()));
+							context.getSource().sendMessage(MainMod.t(
+									Text.translatable("commands.rewards.reset.success", target.getName().getString()), context.getSource().getPlayer()));
 							return 1;
 						})));
 
@@ -84,8 +86,8 @@ public class MainMod implements ModInitializer {
 									MainMod.refreshIfRewardScreen(target);
 
 									context.getSource()
-											.sendMessage(Text.translatable("commands.rewards.setstreak.success",
-													target.getName().getString(), newStreak));
+											.sendMessage(MainMod.t(Text.translatable("commands.rewards.setstreak.success",
+													target.getName().getString(), newStreak), context.getSource().getPlayer()));
 									return 1;
 								}))));
 
@@ -108,8 +110,8 @@ public class MainMod implements ModInitializer {
 									MainMod.refreshIfRewardScreen(target);
 
 									context.getSource()
-											.sendMessage(Text.translatable("commands.rewards.setplaytime.success",
-													target.getName().getString(), newSeconds));
+											.sendMessage(MainMod.t(Text.translatable("commands.rewards.setplaytime.success",
+													target.getName().getString(), newSeconds), context.getSource().getPlayer()));
 									return 1;
 								}))));
 
@@ -132,7 +134,7 @@ public class MainMod implements ModInitializer {
 		ServerCommandSource scs = context.getSource();
 		UUID uuid;
 		if (entity == null || (uuid = entity.getUuid()) == null) {
-			scs.sendError(Text.translatable("commands.rewards.error.entity_null"));
+			scs.sendError(MainMod.t(Text.translatable("commands.rewards.error.entity_null"), scs.getPlayer()));
 			return 0;
 		}
 		if (scs.hasPermissionLevel(2) || environment.integrated) {
@@ -141,21 +143,21 @@ public class MainMod implements ModInitializer {
 				case Removed -> MainServer.screenEntities.remove(uuid);
 			};
 			if (!bl) {
-				scs.sendError(Text.translatable(switch (action) {
+				scs.sendError(MainMod.t(Text.translatable(switch (action) {
 					case Added -> "commands.rewards.screen_entity.already_added";
 					case Removed -> "commands.rewards.screen_entity.not_found";
-				}, uuid.toString()));
+				}, uuid.toString()), scs.getPlayer()));
 
 			} else {
-				scs.sendMessage(Text.translatable(switch (action) {
+				scs.sendMessage(MainMod.t(Text.translatable(switch (action) {
 					case Added -> "commands.rewards.screen_entity.added";
 					case Removed -> "commands.rewards.screen_entity.removed";
-				}, uuid.toString()));
+				}, uuid.toString()), scs.getPlayer()));
 			}
 
 			MainServer.configHandlerThread.execute(MainServer.globalConfigHandler::writeCurrentValue);
 		} else {
-			scs.sendError(Text.translatable("commands.rewards.error.no_permission"));
+			scs.sendError(MainMod.t(Text.translatable("commands.rewards.error.no_permission"), scs.getPlayer()));
 		}
 		return 0;
 	}
@@ -177,17 +179,17 @@ public class MainMod implements ModInitializer {
 				}).reload();
 
 				if (reloaded) {
-					scs.sendMessage(Text.translatable("commands.rewards.reload.success", type.name()));
+					scs.sendMessage(MainMod.t(Text.translatable("commands.rewards.reload.success", type.name()), scs.getPlayer()));
 				} else {
-					scs.sendMessage(Text.translatable("commands.rewards.reload.default", type.name()));
+					scs.sendMessage(MainMod.t(Text.translatable("commands.rewards.reload.default", type.name()), scs.getPlayer()));
 				}
 				scs.getServer().getPlayerManager().getPlayerList().forEach(MainMod::refreshIfRewardScreen);
 			} catch (Exception e) {
-				scs.sendMessage(Text.translatable("commands.rewards.reload.failed", type.name()));
+				scs.sendMessage(MainMod.t(Text.translatable("commands.rewards.reload.failed", type.name()), scs.getPlayer()));
 				e.printStackTrace(System.err);
 			}
 		} else {
-			scs.sendError(Text.translatable("commands.rewards.error.no_permission"));
+			scs.sendError(MainMod.t(Text.translatable("commands.rewards.error.no_permission"), scs.getPlayer()));
 		}
 	}
 
@@ -200,5 +202,14 @@ public class MainMod implements ModInitializer {
 
 	public enum ConfigType {
 		Daily, Playtime, Global, PlayerData
+	}
+
+	public static Text t(Text text, ServerPlayerEntity player) {
+		if (player == null) return text;
+		return Localization.text(text, player);
+	}
+
+	public static Text t(Text text) {
+		return t(text, PolymerUtils.getPlayerContext());
 	}
 }
