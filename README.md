@@ -1,17 +1,26 @@
-# Cobbleverse Daily Rewards
+# Cobbleverse Daily Rewards Fabric
 
-A fully functional, bilingual, and heavily optimized fork of the original Daily Rewards mod, tailored for modern Fabric servers.
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg) ![Minecraft](https://img.shields.io/badge/minecraft-1.21-green.svg) ![License](https://img.shields.io/badge/license-MIT-yellow.svg) ![Platform](https://img.shields.io/badge/platform-Fabric-orange.svg)
 
-This mod rewards players for their loyalty and playtime, featuring interactive GUI menus, configurable item/command rewards, and support for complex modpack ecosystems.
+This release marks a complete evolution and total overhaul from version 1.0.0 of the original `daily-rewards-fabric` mod.
 
-## ✨ New Features in this Fork
+[![Download on Modrinth](https://img.shields.io/badge/Download-Modrinth-1bd96a.svg)](https://modrinth.com/mod/cobbleverse-daily-rewards-fabric/) [![GitHub](https://img.shields.io/badge/GitHub-Source-black.svg)](https://github.com/SrKalopsia/cobbleverse-daily-rewards-fabric)
 
-* **Full Internationalization (i18n):** Texts are no longer hardcoded. The mod natively supports English (`en_us`) and Spanish (`es_es`, `es_mx`, etc.), adapting automatically to the player's client language.
-* **New Admin Commands:** Added the ability to manually set a player's playtime via commands, making server administration much easier.
-* **Critical Bug Fixes:** * Fixed an issue where NPC Screen Entities would reset upon server restart.
-  * Fixed a pagination calculation bug (`Math.ceil`) that prevented proper display of subsequent reward pages.
-  * Patched a ghost crash (`Index -1 out of bounds`) in the server console caused by clicking outside the GUI.
-* **Generic Configs:** Ships with clean, universal default configurations out of the box.
+While this fork has been redesigned, translated, and optimized with the **Cobbleverse** ecosystem in mind, **it is 100% standalone and can be used on any Fabric server or modpack.**
+
+### ✨ New Features & Improvements
+
+* 🌍 **Native Localization Support (i18n):** GUI texts are no longer hardcoded. The mod now includes native, dynamic support for English (`en_us`) and Spanish (`es_es`, `es_mx`), automatically adapting to the player's client language.
+* 🛠️ **New Admin Commands:** Added the `/rewards-setplaytime <player> <seconds>` command to allow administrators to manually adjust a player's tracked playtime, making server management and user support much easier.
+* ⚙️ **Generic Configurations:** The mod now generates much cleaner, universal default configuration files (`daily.json` and `playtime.json`) right out of the box, ready for a "Plug & Play" experience.
+
+### 🐛 Critical Bug Fixes
+
+Several severe bugs present in the original version have been patched:
+
+* **NPC Persistence:** Fixed a critical issue where NPCs (Screen Entities) configured to open the rewards menu would lose their link and stop working after a server restart. Data is now forcefully saved to disk when adding or removing an entity.
+* **Broken Pagination:** Fixed a mathematical logic error (`Math.ceil`) in `AbstractRewardScreen` that miscalculated the maximum number of pages, preventing players from accessing subsequent reward pages.
+* **Ghost Click Console Crashes:** Added a safety check to prevent the `java.lang.IndexOutOfBoundsException: Index -1` server console error, which occurred when a player clicked outside the GUI inventory bounds.
 
 ## 🛠️ Commands
 
@@ -27,6 +36,47 @@ This mod rewards players for their loyalty and playtime, featuring interactive G
 * `/rewards-setplaytime <player> <seconds>` - Manually sets a player's tracked playtime.
 * `/rewards-screen-entity add <entity>` - Registers an entity (like an NPC) to open the rewards GUI when clicked.
 * `/rewards-screen-entity remove <entity>` - Unregisters a screen entity.
+
+## ⚙️ Configuration Example & Flexibility
+
+Curious about how customizable this is? The mod uses a clean, intuitive JSON structure that gives you total freedom over how rewards are distributed. You can mix and match two methods:
+
+* **Method 1 (Via Commands):** Perfect for virtual economy (like *Cobbledollars*), permissions, or complex items with NBT/Lore. You run the command in the background and set `"give_item": false` so the GUI item only acts as a visual icon.
+* **Method 2 (Direct Physical Items):** You can leave the `commands` array empty and simply set `"give_item": true`. The mod will directly give the player the exact physical item shown in the GUI.
+
+Here is a quick sneak peek of how a daily reward is configured using both methods:
+
+```json
+[
+  {
+    "day": 1,
+    "id": "day_1",
+    "commands": [
+      "cobbledollars give %player% 5000"
+    ],
+    "items": [
+      {
+        "item": "minecraft:paper",
+        "name": "{\"text\":\"5,000 Cobbledollars (Command)\",\"color\":\"green\"}",
+        "amount": 1,
+        "give_item": false
+      },
+      {
+        "item": "cobblemon:rare_candy",
+        "name": "{\"text\":\"Rare Candy (Direct Item)\",\"color\":\"aqua\"}",
+        "amount": 3,
+        "give_item": true
+      }
+    ]
+  }
+]
+```
+
+> 📄 **Want to see the full potential?**
+> Check out the complete default configurations on our GitHub:
+>
+> * [View default daily.json](https://github.com/SrKalopsia/cobbleverse-daily-rewards-fabric/blob/main/src/main/resources/config/daily.json)
+> * [View default playtime.json](https://github.com/SrKalopsia/cobbleverse-daily-rewards-fabric/blob/main/src/main/resources/config/playtime.json)
 
 ## 📜 Credits
 
