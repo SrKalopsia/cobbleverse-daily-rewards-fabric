@@ -13,7 +13,7 @@ While this fork has been redesigned, translated, and optimized with the **Cobble
 ### ✨ New Features & Improvements
 
 * 🚀 **100% Server-Side (Polymer):** The mod is now fully server-side. Players do not need to install the mod to see the GUIs or interact with the rewards system.
-* 🌍 **Native Localization Support (i18n):** GUI texts are no longer hardcoded. Using the **Server Translations API**, the mod now automatically adapts to the player's client language without requiring any client-side resource packs.
+* 🌍 **Native Localization Support (i18n):** GUI texts are no longer hardcoded. Using the **Server Translations API**, the mod now automatically adapts to the player's client language (Currently includes native support for English and Spanish, falling back to English for other languages) without requiring any client-side resource packs.
 * 🛠️ **New Admin Commands:** Added the `/rewards-setplaytime <player> <seconds>` command to allow administrators to manually adjust a player's tracked playtime, making server management and user support much easier.
 * ⚙️ **Generic Configurations:** The mod now generates much cleaner, universal default configuration files (`daily.json` and `playtime.json`) right out of the box, ready for a "Plug & Play" experience.
 
