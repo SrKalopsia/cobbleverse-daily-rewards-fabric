@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.1] - 2026-05-31
+
+### Fixed
+- **Time Translation**: Resolved a critical bug where time components (days, hours, minutes) in the Playtime Rewards menu were hardcoded and not translating to the client's language.
+  - Refactored `TimeFormatter` to use `Text.translatable` components.
+  - Added "days" formatting to time played/required strings.
+- **Tooltip Localization**: Fixed reward item tooltips not being localized server-side. They now correctly respect each player's language preference.
+- **Language Coverage**: Updated all 16 language files (8 assets, 8 data) with new keys for time units.
+
 ## [3.0.0] - 2026-05-30
 
 ### Changed
