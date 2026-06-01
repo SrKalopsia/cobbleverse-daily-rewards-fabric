@@ -8,3 +8,7 @@ run/
 *.jar
 *.bin
 *.lock
+
+# Local AI Context
+GEMINI.md
+.gemini/
