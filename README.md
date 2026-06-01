@@ -1,6 +1,6 @@
 # Cobbleverse Daily Rewards Fabric
 
-![Version](https://img.shields.io/badge/version-3.0.1-blue.svg) ![Minecraft](https://img.shields.io/badge/minecraft-1.21-green.svg) ![License](https://img.shields.io/badge/license-MIT-yellow.svg) ![Platform](https://img.shields.io/badge/platform-Fabric-orange.svg)
+![Version](https://img.shields.io/badge/version-3.1.0-blue.svg) ![Minecraft](https://img.shields.io/badge/minecraft-1.21.1-green.svg) ![License](https://img.shields.io/badge/license-MIT-yellow.svg) ![Platform](https://img.shields.io/badge/platform-Fabric-orange.svg)
 
 This release marks a complete evolution and total overhaul from version 1.0.0 of the original `daily-rewards-fabric` mod.
 
@@ -13,7 +13,8 @@ While this fork has been redesigned, translated, and optimized with the **Cobble
 ### ✨ New Features & Improvements
 
 * 🚀 **100% Server-Side:** The mod is now fully server-side. Players do not need to install the mod to see the GUIs or interact with the rewards system.
-* 🌍 **Native Localization Support (i18n):** GUI texts are no longer hardcoded. Using the **Server Translations API**, the mod now automatically adapts to the player's client language (Currently includes native support for English and Spanish, falling back to English for other languages) without requiring any client-side resource packs.
+* 🌍 **Native Localization Support (i18n):** GUI texts are no longer hardcoded. Using the **Server Translations API**, the mod now automatically adapts to the player's client language (English and multiple Spanish variants supported) without requiring any client-side resource packs.
+* 🕒 **Dynamic Cooldown Timers:** Daily rewards now feature a real-time "Available in: Xh Ym" timer in the tooltips. To keep the UI clean, this timer is only displayed for the next immediate reward in your streak.
 * 🛠️ **New Admin Commands:** Added the `/rewards-setplaytime <player> <seconds>`, `/rewards-setstreak <player> <days>`, and `/rewards-reset <player>` commands. This allows administrators to manually adjust a player's tracked playtime and daily login streaks, making server management and user support much easier.
 * ⚙️ **Generic Configurations:** The mod now generates much cleaner, universal default configuration files (`daily.json` and `playtime.json`) right out of the box, ready for a "Plug & Play" experience.
 
