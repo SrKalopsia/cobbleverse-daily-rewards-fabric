@@ -30,5 +30,8 @@
     "gui.rewards.time.hour": "%s hour",
     "gui.rewards.time.hours": "%s hours",
     "gui.rewards.time.minute": "%s minute",
-    "gui.rewards.time.minutes": "%s minutes"
+    "gui.rewards.time.minutes": "%s minutes",
+    "gui.rewards.daily.cooldown": "Available in: %s",
+    "gui.rewards.time.short.hour": "h",
+    "gui.rewards.time.short.minute": "m"
 }

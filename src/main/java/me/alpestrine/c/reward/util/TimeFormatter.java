@@ -30,4 +30,23 @@ public interface TimeFormatter {
 
         return text;
     }
+
+    static Text formatShort(long ms) {
+        long seconds = ms / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        minutes %= 60;
+
+        MutableText text = Text.empty();
+        if (hours > 0) {
+            text.append(Text.literal(String.valueOf(hours)))
+                    .append(Text.translatable("gui.rewards.time.short.hour"));
+            if (minutes > 0) text.append(Text.literal(" "));
+        }
+        if (minutes > 0 || (hours == 0)) {
+            text.append(Text.literal(String.valueOf(minutes)))
+                    .append(Text.translatable("gui.rewards.time.short.minute"));
+        }
+        return text;
+    }
 }

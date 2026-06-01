@@ -6,10 +6,12 @@ import me.alpestrine.c.reward.config.objects.JsonDailyReward;
 import me.alpestrine.c.reward.config.objects.JsonPlayerData;
 import me.alpestrine.c.reward.screen.button.ItemBuilder;
 import me.alpestrine.c.reward.server.MainServer;
+import me.alpestrine.c.reward.util.TimeFormatter;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -39,6 +41,24 @@ public class DailyScreen extends AbstractRewardScreen {
             int reqTrek = entry.getKey();
             boolean isClaimed = data.claimedDaily.contains(jpr.getId());
             boolean isClaimable = currentStreak >= reqTrek;
+
+            Text[] tooltip = getToolTip(jpr.getRewardItems(), viewer);
+            if (!isClaimed && !isClaimable && reqTrek == currentStreak + 1) {
+                long currentTime = System.currentTimeMillis();
+                long nextAdvancement = data.lastRewardTime + MainServer.millisecondsInDay;
+                long timeLeft = nextAdvancement - currentTime;
+
+                if (timeLeft > 0) {
+                    Text cooldownText = MainMod.t(Text.translatable("gui.rewards.daily.cooldown", TimeFormatter.formatShort(timeLeft)), viewer);
+
+                    Text[] newTooltip = new Text[tooltip.length + 2];
+                    System.arraycopy(tooltip, 0, newTooltip, 0, tooltip.length);
+                    newTooltip[tooltip.length] = Text.empty();
+                    newTooltip[tooltip.length + 1] = cooldownText.copy().formatted(Formatting.GRAY);
+                    tooltip = newTooltip;
+                }
+            }
+
             int sl;
             if (currentSlot >= maxSlot) {
                 currentSlot = minSlot;
@@ -49,7 +69,7 @@ public class DailyScreen extends AbstractRewardScreen {
             }
             setButton(currentPage, sl, ItemBuilder.start(getClaimItem(isClaimed, isClaimable))
                     .name(MainMod.t(Text.translatable("gui.rewards.daily.day", reqTrek), viewer))
-                    .tooltip(getToolTip(jpr.getRewardItems(), viewer))
+                    .tooltip(tooltip)
                     .button(event -> onClick(isClaimed, isClaimable, event.player, data, jpr, Type.Daily)));
         }
     }

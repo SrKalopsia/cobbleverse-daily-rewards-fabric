@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.0] - 2026-06-01
+
+### Added
+- **Visual Cooldown Timer**: Introduced a dynamic "Available in: Xh Ym" line in the Daily Rewards GUI tooltips.
+  - This timer only displays for the reward immediately following the player's current streak to maintain a clean interface.
+- **Short Time Formatting**: Added `TimeFormatter.formatShort` to support compact server-side translated time strings.
+- **Expanded Localization**: Updated all 16 language files (English and Spanish variants) with new keys for the cooldown message and short time units ("h", "m").
+
 ## [3.0.1] - 2026-05-31
 
 ### Fixed
