@@ -17,7 +17,7 @@ This release marks a complete evolution and total overhaul from the original `da
   * Currently supports **English** and **Spanish** (multiple variants).
   * Other languages will default to English.
   * 🤝 **Contributions Welcome:** If you'd like to help translate the mod into your language, feel free to open a Pull Request on our GitHub!
-* 📋 **Template System:** Quickly switch between pre-configured reward sets (Vanilla, Economy, Cobbleverse) using the `/rewards-setup load` command.
+* 📋 **Template System:** Quickly switch between reward sets using the `/rewards-setup load` command. It automatically detects any templates (including your own!) placed in the `config/rewards/templates/` folder.
 * 🔄 **Looping Streaks:** Configure your daily rewards once and let them cycle automatically.
 * 🕒 **Dynamic Cooldowns:** Real-time "Available in: Xh Ym" timers in GUI tooltips.
 * 🖥️ **Remote Access:** Players can open the rewards menu using `/daily` (configurable in `global.json`).
@@ -121,6 +121,16 @@ The following example contrasts **Command vs. Direct** rewards (Day 1) and **Tex
 > * [Economy Playtime Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/economy_playtime.json)
 > * [Cobbleverse Daily Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/cobbleverse_daily.json)
 > * [Cobbleverse Playtime Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/cobbleverse_playtime.json)
+
+### 🎨 Creating Custom Templates
+
+You can easily create your own reward presets. The mod will automatically detect them as long as you follow these steps:
+
+1. Navigate to your server's `config/rewards/templates/` folder.
+2. Create two JSON files with the same prefix:
+   * `yourname_daily.json` (for Daily Rewards)
+   * `yourname_playtime.json` (for Playtime Rewards)
+3. Use the `/rewards-setup load yourname` command in-game. The mod will find your files and apply them instantly!
 
 ## 📜 Credits
 
