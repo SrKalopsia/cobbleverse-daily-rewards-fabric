@@ -116,8 +116,11 @@ The following example contrasts **Command vs. Direct** rewards (Day 1) and **Tex
 > 📁 **[Browse the Templates Folder](https://github.com/SrKalopsia/universal-daily-rewards-fabric/tree/main/src/main/resources/config/templates)**
 >
 > * [Vanilla Daily Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/vanilla_daily.json)
+> * [Vanilla Playtime Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/vanilla_playtime.json)
 > * [Economy Daily Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/economy_daily.json)
+> * [Economy Playtime Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/economy_playtime.json)
 > * [Cobbleverse Daily Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/cobbleverse_daily.json)
+> * [Cobbleverse Playtime Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/cobbleverse_playtime.json)
 
 ## 📜 Credits
 
