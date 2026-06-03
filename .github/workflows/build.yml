@@ -1,5 +1,17 @@
 name: Build Universal Daily Rewards
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/CODE_OF_CONDUCT.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/CODE_OF_CONDUCT.md'
 
 jobs:
   build:
