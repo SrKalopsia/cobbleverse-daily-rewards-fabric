@@ -31,6 +31,7 @@ This release marks a complete evolution and total overhaul from the original `da
 * `/rewards open` - Alias for `/daily`.
 
 #### Admin Commands (Permission Level 2+)
+
 * `/rewards-reload-<type>-config` - Hot-reload specific configurations.
 * `/rewards-check <player>` - Check current streak and playtime stats for a player.
 * `/rewards-force-save` - Forcefully save all player data to disk immediately.
@@ -40,6 +41,7 @@ This release marks a complete evolution and total overhaul from the original `da
 * `/rewards-screen-entity <add|remove> <entity>` - Bind the menu to physical NPCs.
 
 #### Setup Commands (Permission Level 4)
+
 * `/rewards-setup load <template>` - Apply a pre-made template (`vanilla`, `economy`, `cobbleverse`).
 * `/rewards-setup allow-player-command <true|false>` - Toggle remote access via `/daily`.
 
@@ -106,6 +108,16 @@ The following example contrasts **Command vs. Direct** rewards (Day 1) and **Tex
   }
 ]
 ```
+
+> ### 💡 Want to see more full examples?
+>
+> You can explore the complete code for all our pre-made templates directly on our GitHub repository.
+>
+> 📁 **[Browse the Templates Folder](https://github.com/SrKalopsia/universal-daily-rewards-fabric/tree/main/src/main/resources/config/templates)**
+>
+> * [Vanilla Daily Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/vanilla_daily.json)
+> * [Economy Daily Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/economy_daily.json)
+> * [Cobbleverse Daily Config](https://github.com/SrKalopsia/universal-daily-rewards-fabric/blob/main/src/main/resources/config/templates/cobbleverse_daily.json)
 
 ## 📜 Credits
 
