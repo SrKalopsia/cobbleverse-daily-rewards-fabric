@@ -51,30 +51,26 @@ The mod directly gives the player the physical item shown in the GUI.
 * The player will receive exactly what they see (amount, enchants, name, lore).
 
 ### Configuration Example:
-The following example demonstrates how to set up **Command-Based** rewards (Day 1) and **Direct Item** rewards (Day 2) using Vanilla items:
+The following example contrasts **Command vs. Direct** rewards (Day 1) and **Text vs. Translate** names (Day 2):
 
 ```json
 [
   {
     "day": 1,
     "id": "day_1",
-    "commands": [
-      "experience add %player% 500 points",
-      "effect give %player% minecraft:luck 600 1"
-    ],
+    "commands": ["experience add %player% 500 points"],
     "items": [
       {
         "item": "minecraft:experience_bottle",
-        "name": "{\"text\":\"500 XP Points\",\"color\":\"green\",\"bold\":true}",
+        "name": "{\"text\":\"500 XP Points (Command)\",\"color\":\"green\"}",
         "amount": 1,
         "give_item": false
       },
       {
-        "item": "minecraft:rabbit_foot",
-        "name": "{\"text\":\"Lucky Charm (10 min)\",\"color\":\"gold\"}",
-        "lore": ["{\"text\":\"Grants Luck II effect\",\"color\":\"gray\"}"],
-        "amount": 1,
-        "give_item": false
+        "item": "minecraft:diamond",
+        "name": "{\"translate\":\"item.minecraft.diamond\",\"color\":\"aqua\"}",
+        "amount": 3,
+        "give_item": true
       }
     ]
   },
@@ -83,10 +79,15 @@ The following example demonstrates how to set up **Command-Based** rewards (Day 
     "id": "day_2",
     "items": [
       {
-        "item": "minecraft:diamond",
-        "name": "{\"translate\":\"item.minecraft.diamond\",\"color\":\"aqua\",\"bold\":true}",
-        "amount": 3,
-        "glint": true,
+        "item": "minecraft:iron_sword",
+        "name": "{\"text\":\"Custom Slayer Sword\",\"color\":\"red\",\"bold\":true}",
+        "amount": 1,
+        "give_item": true
+      },
+      {
+        "item": "minecraft:golden_apple",
+        "name": "{\"translate\":\"item.minecraft.golden_apple\",\"color\":\"gold\"}",
+        "amount": 5,
         "give_item": true
       }
     ]
