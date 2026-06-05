@@ -29,6 +29,7 @@ public class MainServer {
     public static final GlobalConfigHandler globalConfigHandler = new GlobalConfigHandler();
     public static int millisecondsInDay;
     public static int ticksPerUpdate;
+    public static boolean allowPlayerCommand = true;
     public static HashSet<UUID> screenEntities = new HashSet<>();
     private static int lastSave;
     public static MinecraftServer server;

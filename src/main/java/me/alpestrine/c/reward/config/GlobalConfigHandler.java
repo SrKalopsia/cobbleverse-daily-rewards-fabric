@@ -19,6 +19,7 @@ public class GlobalConfigHandler implements BasicConfigReader<Void, Void> {
 
         jo.addProperty("millisecondsInDay", MainServer.millisecondsInDay);
         jo.addProperty("updateTickTime", MainServer.ticksPerUpdate);
+        jo.addProperty("allow_player_command", MainServer.allowPlayerCommand);
 
         JsonArray entitiesJa = new JsonArray();
         for (UUID uuid : MainServer.screenEntities) {
@@ -50,7 +51,23 @@ public class GlobalConfigHandler implements BasicConfigReader<Void, Void> {
         }
         MainServer.millisecondsInDay = global.getMillisecondsInDay();
         MainServer.ticksPerUpdate = global.getTicksPerUpdate();
+        MainServer.allowPlayerCommand = global.isAllowPlayerCommand();
         MainServer.screenEntities = global.getScreenEntity();
+    }
+
+    @Override
+    public void onInit() {
+        try {
+            boolean existed = reload();
+            if (existed) {
+                // Si el archivo ya existía, lo guardamos de nuevo para que se escriban
+                // los nuevos campos (como allow_player_command) que no estaban en la v3
+                writeCurrentValue();
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to load config on init for: " + getName());
+            e.printStackTrace(System.err);
+        }
     }
 
     @Override

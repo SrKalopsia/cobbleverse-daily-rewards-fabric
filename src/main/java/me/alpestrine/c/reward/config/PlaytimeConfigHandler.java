@@ -41,7 +41,7 @@ public class PlaytimeConfigHandler implements BasicConfigReader<Double, JsonPlay
         }
         return gson.toJson(ja);*/
 
-        return readStringFromAsset("config/playtime.json");
+        return readStringFromAsset("config/templates/vanilla_playtime.json");
     }
 
     @Override

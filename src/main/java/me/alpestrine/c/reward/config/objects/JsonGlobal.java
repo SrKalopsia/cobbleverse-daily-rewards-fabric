@@ -11,10 +11,12 @@ import java.util.UUID;
 public class JsonGlobal implements JSONAble {
     private int ticksPerUpdate;
     private int millisecondsInDay;
+    private boolean allowPlayerCommand;
     private HashSet<UUID> screenEntities;
     public JsonGlobal() {
         millisecondsInDay = 1000 * 60 * 60 * 24;
         ticksPerUpdate = 100;
+        allowPlayerCommand = true;
         screenEntities = new HashSet<>();
     }
 
@@ -24,6 +26,10 @@ public class JsonGlobal implements JSONAble {
 
     public int getMillisecondsInDay() {
         return millisecondsInDay;
+    }
+
+    public boolean isAllowPlayerCommand() {
+        return allowPlayerCommand;
     }
 
     public HashSet<UUID> getScreenEntity() {
@@ -36,6 +42,7 @@ public class JsonGlobal implements JSONAble {
 
         jo.addProperty("millisecondsInDay", millisecondsInDay);
         jo.addProperty("updateTickTime", ticksPerUpdate);
+        jo.addProperty("allow_player_command", allowPlayerCommand);
         JsonArray ja = new JsonArray();
         for (UUID uuid : screenEntities) {
             ja.add(uuid.toString());
@@ -50,6 +57,11 @@ public class JsonGlobal implements JSONAble {
 
         millisecondsInDay = jo.get("millisecondsInDay").getAsInt();
         ticksPerUpdate = jo.get("updateTickTime").getAsInt();
+        if (jo.has("allow_player_command")) {
+            allowPlayerCommand = jo.get("allow_player_command").getAsBoolean();
+        } else {
+            allowPlayerCommand = true;
+        }
         screenEntities = new HashSet<>();
         JsonArray ja = jo.getAsJsonArray("screenentity");
         for (JsonElement je : ja) {
@@ -63,11 +75,11 @@ public class JsonGlobal implements JSONAble {
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
         JsonGlobal that = (JsonGlobal) object;
-        return ticksPerUpdate == that.ticksPerUpdate && millisecondsInDay == that.millisecondsInDay && Objects.equals(screenEntities, that.screenEntities);
+        return ticksPerUpdate == that.ticksPerUpdate && millisecondsInDay == that.millisecondsInDay && allowPlayerCommand == that.allowPlayerCommand && Objects.equals(screenEntities, that.screenEntities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ticksPerUpdate, millisecondsInDay, screenEntities);
+        return Objects.hash(ticksPerUpdate, millisecondsInDay, allowPlayerCommand, screenEntities);
     }
 }

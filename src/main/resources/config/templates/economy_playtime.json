@@ -1,0 +1,12 @@
+[
+  {
+    "hours": 1.0,
+    "id": "economy_playtime_1h",
+    "items": [
+      {
+        "item": "minecraft:emerald",
+        "amount": 5
+      }
+    ]
+  }
+]

@@ -25,6 +25,13 @@ import eu.pb4.polymer.core.api.utils.PolymerUtils;
 
 import java.util.UUID;
 
+import net.fabricmc.loader.api.FabricLoader;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
+import java.util.stream.Stream;
+
 public class MainMod implements ModInitializer {
 	public static final String ID = "rewards";
 	public static final Logger LOGGER = LoggerFactory.getLogger(ID);
@@ -32,7 +39,33 @@ public class MainMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Rewards Mod Initializing!");
+		exportTemplates();
 		CommandRegistrationCallback.EVENT.register(this::register);
+	}
+
+	private void exportTemplates() {
+		String[] templates = {
+				"vanilla_daily.json", "vanilla_playtime.json",
+				"economy_daily.json", "economy_playtime.json",
+				"cobbleverse_daily.json", "cobbleverse_playtime.json"
+		};
+		Path templatesDir = FabricLoader.getInstance().getConfigDir().resolve("rewards").resolve("templates");
+		try {
+			Files.createDirectories(templatesDir);
+			for (String template : templates) {
+				Path file = templatesDir.resolve(template);
+				// SOBREESCRIBIR SIEMPRE PARA ASEGURAR COMPATIBILIDAD CON 4.0.0
+				try (InputStream is = getClass().getClassLoader().getResourceAsStream("config/templates/" + template)) {
+					if (is != null) {
+						Files.copy(is, file, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+					} else {
+						LOGGER.warn("Template {} not found in resources!", template);
+					}
+				}
+			}
+		} catch (Exception e) {
+			LOGGER.error("Failed to export templates", e);
+		}
 	}
 
 	private void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess,
@@ -40,8 +73,83 @@ public class MainMod implements ModInitializer {
 		for (ConfigType ct : ConfigType.values()) {
 			dispatcher
 					.register(CommandManager.literal(String.format("rewards-reload-%s-config", ct.name().toLowerCase()))
+							.requires(source -> source.hasPermissionLevel(2) || environment.integrated)
 							.executes(context -> MainServer.execute(() -> execCommand(context, environment, ct))));
 		}
+
+		// PLAYER COMMAND: /daily
+		dispatcher.register(CommandManager.literal("daily")
+				.executes(context -> {
+					ServerCommandSource source = context.getSource();
+					if (source.isExecutedByPlayer() && MainServer.allowPlayerCommand) {
+						source.getPlayer().openHandledScreen(new me.alpestrine.c.reward.screen.screens.SelectionScreen());
+						return 1;
+					} else if (!MainServer.allowPlayerCommand) {
+						source.sendError(MainMod.t(Text.translatable("commands.rewards.error.no_permission"), source.getPlayer()));
+					}
+					return 0;
+				}));
+
+		// PLAYER COMMAND ALIAS: /rewards open
+		dispatcher.register(CommandManager.literal("rewards").then(CommandManager.literal("open")
+				.executes(context -> {
+					ServerCommandSource source = context.getSource();
+					if (source.isExecutedByPlayer() && MainServer.allowPlayerCommand) {
+						source.getPlayer().openHandledScreen(new me.alpestrine.c.reward.screen.screens.SelectionScreen());
+						return 1;
+					} else if (!MainServer.allowPlayerCommand) {
+						source.sendError(MainMod.t(Text.translatable("commands.rewards.error.no_permission"), source.getPlayer()));
+					}
+					return 0;
+				})));
+
+		// ADMIN COMMAND: /rewards-setup load <template>
+		dispatcher.register(CommandManager.literal("rewards-setup")
+				.requires(source -> source.hasPermissionLevel(4) || environment.integrated)
+				.then(CommandManager.literal("load")
+						.then(CommandManager.argument("template", com.mojang.brigadier.arguments.StringArgumentType.string())
+								.suggests((context, builder) -> {
+									Path templatesDir = FabricLoader.getInstance().getConfigDir().resolve("rewards").resolve("templates");
+									if (Files.exists(templatesDir)) {
+										try (Stream<Path> stream = Files.list(templatesDir)) {
+											stream.map(Path::getFileName).map(Path::toString)
+													.filter(s -> s.endsWith("_daily.json"))
+													.map(s -> s.replace("_daily.json", ""))
+													.forEach(builder::suggest);
+										} catch (IOException ignored) {}
+									}
+									return builder.buildFuture();
+								})
+								.executes(context -> {
+									String templateName = com.mojang.brigadier.arguments.StringArgumentType.getString(context, "template");
+									ServerCommandSource source = context.getSource();
+									Path templatesDir = FabricLoader.getInstance().getConfigDir().resolve("rewards").resolve("templates");
+									Path targetDaily = FabricLoader.getInstance().getConfigDir().resolve("rewards").resolve("daily.json");
+									Path targetPlaytime = FabricLoader.getInstance().getConfigDir().resolve("rewards").resolve("playtime.json");
+									Path sourceDaily = templatesDir.resolve(templateName + "_daily.json");
+									Path sourcePlaytime = templatesDir.resolve(templateName + "_playtime.json");
+									
+									if (Files.exists(sourceDaily) && Files.exists(sourcePlaytime)) {
+										try {
+											Files.copy(sourceDaily, targetDaily, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+											Files.copy(sourcePlaytime, targetPlaytime, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+											
+											DailyScreen.dailyHandler.reload();
+											PlaytimeScreen.playtimeHandler.reload();
+											source.getServer().getPlayerManager().getPlayerList().forEach(MainMod::refreshIfRewardScreen);
+											
+											source.sendMessage(MainMod.t(Text.translatable("commands.rewards.setup.success", templateName), source.getPlayer()));
+											return 1;
+										} catch (Exception e) {
+											LOGGER.error("Error loading template", e);
+											source.sendError(MainMod.t(Text.translatable("commands.rewards.setup.error.load", e.getMessage()), source.getPlayer()));
+											return 0;
+										}
+									} else {
+										source.sendError(MainMod.t(Text.translatable("commands.rewards.setup.error.not_found", templateName), source.getPlayer()));
+										return 0;
+									}
+								}))));
 
 		dispatcher.register(CommandManager.literal("rewards-reset")
 				.requires(source -> source.hasPermissionLevel(2) || environment.integrated)

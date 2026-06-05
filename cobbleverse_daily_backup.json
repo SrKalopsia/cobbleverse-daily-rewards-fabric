@@ -32,7 +32,7 @@
       },
       {
         "item": "cobblemon:premier_ball",
-        "name": "{\"text\":\"Premier Balls\",\"color\":\"white\",\"bold\":true}",
+        "name": "{\"translate\":\"item.cobblemon.premier_ball\"}",
         "amount": 5,
         "glint": true,
         "give_item": false
@@ -79,7 +79,7 @@
       },
       {
         "item": "minecraft:iron_ingot",
-        "name": "{\"text\":\"Iron Ingots\",\"color\":\"white\"}",
+        "name": "{\"translate\":\"item.minecraft.iron_ingot\"}",
         "amount": 15,
         "give_item": false
       }

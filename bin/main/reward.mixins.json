@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.alpestrine.c.reward.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "ServerClickMixin",
+    "ServerMixin",
+    "ServerInteractMixin"
+  ]
+}

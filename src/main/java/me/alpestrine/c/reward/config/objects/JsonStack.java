@@ -102,31 +102,32 @@ public class JsonStack implements JSONAble {
         if (name != null) {
             try {
                 Text parsedName = Text.Serialization.fromJson(name, registries);
-                tt.add(Text.literal(amount + "x ").append(parsedName != null ? parsedName : Text.of(name)));
+                tt.add(Text.literal(amount + "x ").append(parsedName != null ? parsedName : Text.literal(name)));
             } catch (Exception e) {
-                tt.add(Text.of(amount + "x " + name));
+                tt.add(Text.literal(amount + "x " + name));
             }
         } else {
-            tt.add(Text.of(amount + "x " + item.getName().getString()));
+            // USAR EL TRANSLATION KEY NATIVO DEL ITEM (Minecraft o Mods)
+            tt.add(Text.literal(amount + "x ").append(Text.translatable(item.getTranslationKey())));
         }
 
         if (lore != null) {
             for (String line : lore) {
                 try {
                     Text parsedLine = Text.Serialization.fromJson(line, registries);
-                    tt.add(parsedLine != null ? parsedLine : Text.of(line));
+                    tt.add(parsedLine != null ? parsedLine : Text.literal(line));
                 } catch (Exception e) {
-                    tt.add(Text.of(line));
+                    tt.add(Text.literal(line));
                 }
             }
         }
 
         if (enchantments != null) {
             for (Map.Entry<RegistryEntry<Enchantment>, Integer> entry : enchantments.entrySet()) {
-                String enchStr = entry.getKey().value().description().getString();
+                Text enchText = entry.getKey().value().description();
                 int level = entry.getValue();
-                String rom = level != 1 ? RomanNumber.toRoman(level) : "";
-                tt.add(Text.of(enchStr + " " + rom));
+                String rom = level != 1 ? " " + RomanNumber.toRoman(level) : "";
+                tt.add(enchText.copy().append(Text.literal(rom)));
             }
         }
         return tt;

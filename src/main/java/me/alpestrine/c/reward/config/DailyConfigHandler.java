@@ -42,7 +42,7 @@ public class DailyConfigHandler implements BasicConfigReader<Integer, JsonDailyR
         }
         return gson.toJson(ja);*/
 
-        return readStringFromAsset("config/daily.json");
+        return readStringFromAsset("config/templates/vanilla_daily.json");
     }
 
     @Override

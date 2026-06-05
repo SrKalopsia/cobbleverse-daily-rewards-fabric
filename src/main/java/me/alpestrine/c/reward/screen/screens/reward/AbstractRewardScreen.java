@@ -13,6 +13,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -142,10 +144,12 @@ public abstract class AbstractRewardScreen extends AbstractACScreen {
             }
 
             if (jbr.getCommands() != null && !jbr.getCommands().isEmpty()) {
-                net.minecraft.server.MinecraftServer server = MainServer.server;
-                for (String cmd : jbr.getCommands()) {
-                    String finalCmd = cmd.replace("%player%", player.getName().getString());
-                    server.getCommandManager().executeWithPrefix(server.getCommandSource(), finalCmd);
+                net.minecraft.server.MinecraftServer server = player.getServer();
+                if (server != null) {
+                    for (String cmd : jbr.getCommands()) {
+                        String finalCmd = cmd.replace("%player%", player.getName().getString());
+                        server.getCommandManager().executeWithPrefix(server.getCommandSource().withSilent(), finalCmd);
+                    }
                 }
             }
 
@@ -153,6 +157,10 @@ public abstract class AbstractRewardScreen extends AbstractACScreen {
                 case Playtime -> data.claimedPlaytime.add(jbr.getId());
                 case Daily -> data.claimedDaily.add(jbr.getId());
             }
+
+            // REPRODUCIR SONIDO AL RECLAMAR
+            player.getWorld().playSound(null, player.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
+
             MainServer.configHandlerThread.execute(AbstractRewardScreen.dataHandler::writeCurrentValue);
             refresh(player);
         }
