@@ -14,6 +14,9 @@ This release marks a complete evolution and total overhaul from the original `da
 
 * 🚀 **100% Server-Side:** No client-side installation required. Powered by **Polymer**.
 * 🌍 **Native Localization (i18n):** Automatically adapts to the player's client language using **Server Translations API**.
+  * Currently supports **English** and **Spanish** (multiple variants).
+  * Other languages will default to English.
+  * 🤝 **Contributions Welcome:** If you'd like to help translate the mod into your language, feel free to open a Pull Request on our GitHub!
 * 📋 **Template System:** Quickly switch between pre-configured reward sets (Vanilla, Economy, Cobbleverse) using the `/rewards-setup load` command.
 * 🔄 **Looping Streaks:** Configure your daily rewards once and let them cycle automatically.
 * 🕒 **Dynamic Cooldowns:** Real-time "Available in: Xh Ym" timers in GUI tooltips.
