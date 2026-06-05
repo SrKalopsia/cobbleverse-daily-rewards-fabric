@@ -51,7 +51,7 @@ The mod directly gives the player the physical item shown in the GUI.
 * The player will receive exactly what they see (amount, enchants, name, lore).
 
 ### Configuration Example:
-The following example shows how you can combine **Translation Keys**, **Custom Text**, and **Command-Based** rewards in a single day:
+The following example demonstrates how to set up **Command-Based** rewards (Day 1) and **Direct Item** rewards (Day 2) using Vanilla items:
 
 ```json
 [
@@ -59,27 +59,33 @@ The following example shows how you can combine **Translation Keys**, **Custom T
     "day": 1,
     "id": "day_1",
     "commands": [
-      "cobbledollars give %player% 5000",
-      "lp user %player% parent add temporary_vip 1d"
+      "experience add %player% 500 points",
+      "effect give %player% minecraft:luck 600 1"
     ],
     "items": [
       {
-        "item": "minecraft:emerald",
-        "name": "{\"text\":\"$5,000 Cobbledollars\",\"color\":\"green\",\"bold\":true}",
+        "item": "minecraft:experience_bottle",
+        "name": "{\"text\":\"500 XP Points\",\"color\":\"green\",\"bold\":true}",
         "amount": 1,
         "give_item": false
       },
       {
-        "item": "minecraft:paper",
-        "name": "{\"text\":\"Temporary VIP (1 Day)\",\"color\":\"gold\"}",
-        "lore": ["{\"text\":\"Grants access to /fly and /feed\",\"color\":\"gray\"}"],
+        "item": "minecraft:rabbit_foot",
+        "name": "{\"text\":\"Lucky Charm (10 min)\",\"color\":\"gold\"}",
+        "lore": ["{\"text\":\"Grants Luck II effect\",\"color\":\"gray\"}"],
         "amount": 1,
         "give_item": false
-      },
+      }
+    ]
+  },
+  {
+    "day": 2,
+    "id": "day_2",
+    "items": [
       {
-        "item": "cobblemon:master_ball",
-        "name": "{\"translate\":\"item.cobblemon.master_ball\",\"color\":\"dark_purple\",\"bold\":true}",
-        "amount": 1,
+        "item": "minecraft:diamond",
+        "name": "{\"translate\":\"item.minecraft.diamond\",\"color\":\"aqua\",\"bold\":true}",
+        "amount": 3,
         "glint": true,
         "give_item": true
       }
