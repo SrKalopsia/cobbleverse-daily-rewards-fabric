@@ -149,7 +149,38 @@ public class MainMod implements ModInitializer {
 										source.sendError(MainMod.t(Text.translatable("commands.rewards.setup.error.not_found", templateName), source.getPlayer()));
 										return 0;
 									}
+								})))
+				.then(CommandManager.literal("allow-player-command")
+						.then(CommandManager.argument("enabled", com.mojang.brigadier.arguments.BoolArgumentType.bool())
+								.executes(context -> {
+									boolean enabled = com.mojang.brigadier.arguments.BoolArgumentType.getBool(context, "enabled");
+									MainServer.allowPlayerCommand = enabled;
+									MainServer.configHandlerThread.execute(MainServer.globalConfigHandler::writeCurrentValue);
+									context.getSource().sendMessage(MainMod.t(Text.translatable("commands.rewards.setup.allow_command.success", enabled), context.getSource().getPlayer()));
+									return 1;
 								}))));
+
+		dispatcher.register(CommandManager.literal("rewards-check")
+				.requires(source -> source.hasPermissionLevel(2) || environment.integrated)
+				.then(CommandManager.argument("target", EntityArgumentType.player())
+						.executes(context -> {
+							ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "target");
+							me.alpestrine.c.reward.config.objects.JsonPlayerData data = AbstractRewardScreen.dataHandler.getForUUID(target.getUuid());
+							ServerCommandSource source = context.getSource();
+
+							source.sendMessage(Text.literal("§6--- §l" + target.getName().getString() + " Stats §6---"));
+							source.sendMessage(MainMod.t(Text.translatable("gui.rewards.daily.streak.plural", data.currentStreak), source.getPlayer()));
+							source.sendMessage(MainMod.t(Text.translatable("gui.rewards.playtime.played", me.alpestrine.c.reward.util.TimeFormatter.format(me.alpestrine.c.reward.util.IMath.round(data.playtimeSeconds / 60, 3))), source.getPlayer()));
+							return 1;
+						})));
+
+		dispatcher.register(CommandManager.literal("rewards-force-save")
+				.requires(source -> source.hasPermissionLevel(2) || environment.integrated)
+				.executes(context -> {
+					MainServer.configHandlerThread.execute(AbstractRewardScreen.dataHandler::writeCurrentValue);
+					context.getSource().sendMessage(MainMod.t(Text.translatable("commands.rewards.force_save.success"), context.getSource().getPlayer()));
+					return 1;
+				}));
 
 		dispatcher.register(CommandManager.literal("rewards-reset")
 				.requires(source -> source.hasPermissionLevel(2) || environment.integrated)

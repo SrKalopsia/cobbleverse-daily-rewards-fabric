@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
   - Automatic template export to `config/rewards/templates/` on startup.
 - **Player Access Commands**: Added `/daily` and `/rewards open` for remote GUI access.
   - Toggleable via the new `allow_player_command` setting in `global.json`.
+  - New admin command: `/rewards-setup allow-player-command <true/false>` to toggle this setting in-game.
+- **New Utility Admin Commands**:
+  - `/rewards-check <player>`: Check a player's current streak and playtime stats.
+  - `/rewards-force-save`: Forcefully save all player data to disk immediately.
 - **Internationalized Templates**: Updated default templates to use Minecraft's `translate` keys, allowing reward names to adapt to the player's client language automatically.
 - **Improved UX**: 
   - Added claim sound effects (`ENTITY_EXPERIENCE_ORB_PICKUP`) for better feedback.

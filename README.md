@@ -28,16 +28,17 @@ This release marks a complete evolution and total overhaul from the original `da
 * `/rewards open` - Alias for `/daily`.
 
 #### Admin Commands (Permission Level 2+)
-
 * `/rewards-reload-<type>-config` - Hot-reload specific configurations.
+* `/rewards-check <player>` - Check current streak and playtime stats for a player.
+* `/rewards-force-save` - Forcefully save all player data to disk immediately.
 * `/rewards-reset <player>` - Reset all progress for a player.
 * `/rewards-setstreak <player> <days>` - Adjust daily login streak.
 * `/rewards-setplaytime <player> <seconds>` - Adjust tracked playtime.
 * `/rewards-screen-entity <add|remove> <entity>` - Bind the menu to physical NPCs.
 
 #### Setup Commands (Permission Level 4)
-
 * `/rewards-setup load <template>` - Apply a pre-made template (`vanilla`, `economy`, `cobbleverse`).
+* `/rewards-setup allow-player-command <true|false>` - Toggle remote access via `/daily`.
 
 ## ⚙️ Configuration & Flexibility
 
