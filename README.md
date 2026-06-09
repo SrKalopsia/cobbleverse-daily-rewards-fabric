@@ -106,7 +106,7 @@ This release marks a complete evolution and total overhaul from the original `da
 
 <p align="center">
   <img src="media/npc_rewards_entity.png" alt="In-game physical NPC rewards screen binding" width="85%"><br>
-  <em>Bind your rewards menu directly to any physical entity or NPC in the game world with <code>/rewards-screen-entity add</code>!</em>
+  <em>Bind your rewards menu directly to any physical entity or NPC in the game world with <code>/rewards-screen-entity add <entity></code></em>
 </p>
 
 ## ⚙️ Configuration & Flexibility
