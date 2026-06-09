@@ -81,7 +81,7 @@ This release marks a complete evolution and total overhaul from the original `da
     </td>
     <td align="center" style="border: none; padding: 10px; vertical-align: top;">
       <img src="media/tooltip_playtime_1h.png" alt="1 Hour Playtime Reward Tooltip" width="85%"><br>
-      <small><strong>1 Hour (Already Claimed):</strong> Displays as claimed glass pane.</small>
+      <small><strong>1 Hour (Claimable):</strong> Displays as claimed glass pane.</small>
     </td>
   </tr>
   <tr style="border: none;">
