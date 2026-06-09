@@ -1,5 +1,6 @@
 .gradle/
 build/
+bin/
 run/
 .fabric/
 .loom/
@@ -12,3 +13,4 @@ run/
 # Local AI Context
 GEMINI.md
 .gemini/
+scratch/

@@ -20,6 +20,47 @@ public class DailyScreen extends AbstractRewardScreen {
     public static final Item dailyItem = Items.BELL;
     public static final DailyConfigHandler dailyHandler = new DailyConfigHandler();
 
+    public DailyScreen() {
+        super(1, calculateRows());
+    }
+
+    private static int calculateRows() {
+        int max = 0;
+        if (dailyHandler != null && dailyHandler.getItems() != null) {
+            for (int day : dailyHandler.getItems().keySet()) {
+                if (day > max) {
+                    max = day;
+                }
+            }
+        }
+        if (max <= 0) {
+            return 6; // fallback
+        }
+        int weeks = (Math.min(max, 28) + 6) / 7;
+        weeks = Math.max(1, weeks);
+        return weeks + 2;
+    }
+
+    private int getDaysPerPage() {
+        return (size() / 9 - 2) * 7;
+    }
+
+
+    @Override
+    protected int getMaxPage() {
+        return (int) Math.ceil((double) elementAmount() / (double) getDaysPerPage());
+    }
+
+    private int getSlotForDay(int day) {
+        int week = (day - 1) / 7;
+        int dayOfWeek = (day - 1) % 7;
+        int slot = (week + 1) * 9 + (dayOfWeek + 1);
+        if (slot >= size()) {
+            return size() - 1;
+        }
+        return slot;
+    }
+
     @Override
     public void addButtons(ServerPlayerEntity viewer) {
         JsonPlayerData data = dataHandler.getForUUID(viewer.getUuid());
@@ -31,14 +72,19 @@ public class DailyScreen extends AbstractRewardScreen {
                         currentStreak), viewer))
                 .button());
 
-        int currentSlot = minSlot - 1;
-        int currentPage = 1;
         ArrayList<Map.Entry<Integer, JsonDailyReward>> rewards = new ArrayList<>(getRewards().entrySet());
         rewards.sort(Map.Entry.comparingByKey());
 
         for (Map.Entry<Integer, JsonDailyReward> entry : rewards) {
             JsonDailyReward jpr = entry.getValue();
             int reqTrek = entry.getKey();
+
+            int daysPerPage = getDaysPerPage();
+            int dayOnPage = reqTrek - (getPage() - 1) * daysPerPage;
+            if (dayOnPage < 1 || dayOnPage > daysPerPage) {
+                continue;
+            }
+
             boolean isClaimed = data.claimedDaily.contains(jpr.getId());
             boolean isClaimable = currentStreak >= reqTrek;
 
@@ -59,15 +105,8 @@ public class DailyScreen extends AbstractRewardScreen {
                 }
             }
 
-            int sl;
-            if (currentSlot >= maxSlot) {
-                currentSlot = minSlot;
-                currentPage++;
-                sl = currentSlot;
-            } else {
-                sl = (currentSlot += 1);
-            }
-            setButton(currentPage, sl, ItemBuilder.start(getClaimItem(isClaimed, isClaimable))
+            int sl = getSlotForDay(dayOnPage);
+            setButton(sl, ItemBuilder.start(getClaimItem(isClaimed, isClaimable))
                     .name(MainMod.t(Text.translatable("gui.rewards.daily.day", reqTrek), viewer))
                     .tooltip(tooltip)
                     .button(event -> onClick(isClaimed, isClaimable, event.player, data, jpr, Type.Daily)));

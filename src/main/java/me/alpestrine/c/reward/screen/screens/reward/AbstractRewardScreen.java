@@ -44,6 +44,12 @@ public abstract class AbstractRewardScreen extends AbstractACScreen {
     }
 
     protected AbstractRewardScreen(int page) {
+        super();
+        setPage(page);
+    }
+
+    protected AbstractRewardScreen(int page, int rows) {
+        super(rows);
         setPage(page);
     }
 
@@ -74,25 +80,31 @@ public abstract class AbstractRewardScreen extends AbstractACScreen {
     protected void fillEmpty() {
         super.fillEmpty();
 
-        setButton(18, ItemBuilder.start(backItem).name(MainMod.t(Text.translatable("gui.rewards.back_button")))
+        int rows = size() / 9;
+        int bottomRowStart = (rows - 1) * 9;
+
+        setButton(bottomRowStart + 4, ItemBuilder.start(backItem)
+                .name(MainMod.t(Text.translatable("gui.rewards.back_button")))
                 .button(event -> event.player.openHandledScreen(new SelectionScreen())));
 
         int prev = getPage() - 1;
         boolean canPrev = canSetPageTo(prev);
-        setButton(25,
-                ItemBuilder.start(canPrev ? prevItem : invalidItem)
-                        .name(canPrev ? MainMod.t(Text.translatable("gui.rewards.prev_page", prev)) : Text.empty())
-                        .button(canPrev ? event -> setPageForPlayer(prev, event.player) : null));
+        if (canPrev) {
+            setButton(bottomRowStart + 2, ItemBuilder.start(prevItem)
+                    .name(MainMod.t(Text.translatable("gui.rewards.prev_page", prev)))
+                    .button(event -> setPageForPlayer(prev, event.player)));
+        }
 
         int next = getPage() + 1;
         boolean canNext = canSetPageTo(next);
-        setButton(26,
-                ItemBuilder.start(canNext ? nextItem : invalidItem)
-                        .name(canNext ? MainMod.t(Text.translatable("gui.rewards.next_page", next)) : Text.empty())
-                        .button(canNext ? event -> setPageForPlayer(next, event.player) : null));
+        if (canNext) {
+            setButton(bottomRowStart + 6, ItemBuilder.start(nextItem)
+                    .name(MainMod.t(Text.translatable("gui.rewards.next_page", next)))
+                    .button(event -> setPageForPlayer(next, event.player)));
+        }
     }
 
-    private void setPageForPlayer(int page, ServerPlayerEntity viewer) {
+    protected void setPageForPlayer(int page, ServerPlayerEntity viewer) {
         setPage(page);
         init(viewer);
         viewer.currentScreenHandler.updateToClient();

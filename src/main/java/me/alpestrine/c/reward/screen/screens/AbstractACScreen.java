@@ -26,7 +26,11 @@ public abstract class AbstractACScreen extends AbstractButtonHolder implements I
     private final DefaultedList<ItemStack> heldStacks;
 
     public AbstractACScreen() {
-        this.rows = defaultRows;
+        this(defaultRows);
+    }
+
+    public AbstractACScreen(int rows) {
+        this.rows = rows;
         this.heldStacks = DefaultedList.ofSize(this.rows * 9, ItemStack.EMPTY);
     }
 

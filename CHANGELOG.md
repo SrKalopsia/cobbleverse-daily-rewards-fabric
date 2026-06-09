@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.1.0] - 2026-06-09
+
+### Added
+- **Dynamic Adaptability**: The Daily Rewards layout now dynamically adjusts the number of rows (from 3 to 6 rows) based on the maximum day configured in the `daily.json` settings:
+  - Configs with 1–7 days are automatically displayed in a compact 3-row layout (1 week grid).
+  - Configs with up to 14, 21, or 28+ days expand to 4, 5, or 6 rows respectively, preserving a clean weekly alignment.
+- **Shared Center-Aligned GUI Layout**: Restructured the base screen layout in all rewards screens to feature a centered Return button flanked symmetrically by previous/next page navigation buttons.
+  - Applied this clean layout to both the Daily Rewards and Playtime Rewards screens.
+- **Documentation & Screenshots**: 
+  - Added new high-resolution in-game screenshots to the repository under the `media/` folder.
+  - Documented the daily grid, playtime milestone trackers, reward tooltips, active cooldown indicators, and NPC binding features in the `README.md`.
+
 ## [4.0.1] - 2026-06-07
 
 ### Added

@@ -1,6 +1,6 @@
 # Universal Daily Rewards
 
-![Version](https://img.shields.io/badge/version-4.0.1-blue.svg) ![Minecraft](https://img.shields.io/badge/minecraft-1.21.1-green.svg) ![License](https://img.shields.io/badge/license-MIT-yellow.svg) ![Platform](https://img.shields.io/badge/platform-Fabric-orange.svg) [![Build Universal Daily Rewards](https://github.com/SrKalopsia/Universal-Daily-Rewards-Fabric/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/SrKalopsia/Universal-Daily-Rewards-Fabric/actions/workflows/build.yml)
+![Version](https://img.shields.io/badge/version-4.1.0-blue.svg) ![Minecraft](https://img.shields.io/badge/minecraft-1.21.1-green.svg) ![License](https://img.shields.io/badge/license-MIT-yellow.svg) ![Platform](https://img.shields.io/badge/platform-Fabric-orange.svg) [![Build Universal Daily Rewards](https://github.com/SrKalopsia/Universal-Daily-Rewards-Fabric/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/SrKalopsia/Universal-Daily-Rewards-Fabric/actions/workflows/build.yml)
 
 This release marks a complete evolution and total overhaul from the original `daily-rewards-fabric` mod. Formerly known as Cobbleverse Daily Rewards, version 4.0.0 introduces a universal architecture designed for any Minecraft server.
 
@@ -44,6 +44,70 @@ This release marks a complete evolution and total overhaul from the original `da
 
 * `/rewards-setup load <template>` - Apply a pre-made template (`vanilla`, `economy`, `cobbleverse`).
 * `/rewards-setup allow-player-command <true|false>` - Toggle remote access via `/daily`.
+
+## 📸 Gallery / In-Game Media
+
+<table align="center" style="border-collapse: collapse; border: none; width: 100%;">
+  <tr style="border: none;">
+    <td align="center" style="border: none; padding: 10px; width: 33%; vertical-align: top;">
+      <img src="media/gui_selection_menu.png" alt="Selection Menu GUI" width="100%"><br>
+      <strong>Selection Menu</strong><br>
+      <small>The entry screen allowing players to choose between Daily and Playtime rewards.</small>
+    </td>
+    <td align="center" style="border: none; padding: 10px; width: 33%; vertical-align: top;">
+      <img src="media/gui_daily_calendar.png" alt="Daily Calendar GUI" width="100%"><br>
+      <strong>Daily Calendar</strong><br>
+      <small>Dynamic 28-day grid that automatically adapts to the number of configured daily rewards.</small>
+    </td>
+    <td align="center" style="border: none; padding: 10px; width: 33%; vertical-align: top;">
+      <img src="media/gui_playtime_rewards.png" alt="Playtime Rewards GUI" width="100%"><br>
+      <strong>Playtime Rewards</strong><br>
+      <small>Clean listing of playtime milestones with real-time tracking.</small>
+    </td>
+  </tr>
+</table>
+
+<h3 align="center">🎁 Reward Tooltips & Cooldowns</h3>
+
+<table align="center" style="border-collapse: collapse; border: none; width: 100%;">
+  <tr style="border: none;">
+    <th align="center" style="border: none; padding: 5px; width: 50%;">Daily Login Rewards</th>
+    <th align="center" style="border: none; padding: 5px; width: 50%;">Playtime Milestone Rewards</th>
+  </tr>
+  <tr style="border: none;">
+    <td align="center" style="border: none; padding: 10px; vertical-align: top;">
+      <img src="media/tooltip_daily_day1.png" alt="Day 1 Daily Reward Tooltip" width="85%"><br>
+      <small><strong>Day 1 (Claimable):</strong> Shows preview of reward items.</small>
+    </td>
+    <td align="center" style="border: none; padding: 10px; vertical-align: top;">
+      <img src="media/tooltip_playtime_1h.png" alt="1 Hour Playtime Reward Tooltip" width="85%"><br>
+      <small><strong>1 Hour (Already Claimed):</strong> Displays as claimed glass pane.</small>
+    </td>
+  </tr>
+  <tr style="border: none;">
+    <td align="center" style="border: none; padding: 10px; vertical-align: top;">
+      <img src="media/tooltip_daily_day31.png" alt="Day 31 Daily Reward Tooltip with cooldown" width="85%"><br>
+      <small><strong>Day 31 (Locked):</strong> Shows active cooldown and time remaining.</small>
+    </td>
+    <td align="center" style="border: none; padding: 10px; vertical-align: top;">
+      <img src="media/tooltip_playtime_1000h.png" alt="1000 Hours Playtime Reward Tooltip" width="85%"><br>
+      <small><strong>1000 Hours (Locked):</strong> Tooltip preview for locked high-tier milestone.</small>
+    </td>
+  </tr>
+  <tr style="border: none;">
+    <td align="center" style="border: none; padding: 10px; vertical-align: top;" colspan="2">
+      <img src="media/tooltip_playtime_current.png" alt="Current Playtime Status Tooltip" width="45%"><br>
+      <small><strong>Total Playtime Status:</strong> Hover over the clock in-game to see your exact active playtime tracker.</small>
+    </td>
+  </tr>
+</table>
+
+<h3 align="center">👤 Physical NPCs Binding</h3>
+
+<p align="center">
+  <img src="media/npc_rewards_entity.png" alt="In-game physical NPC rewards screen binding" width="85%"><br>
+  <em>Bind your rewards menu directly to any physical entity or NPC in the game world with <code>/rewards-screen-entity add</code>!</em>
+</p>
 
 ## ⚙️ Configuration & Flexibility
 
